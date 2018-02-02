@@ -13,9 +13,23 @@
   (loop [input source solution 0]
     (let [input-el-1 (first input)
           input-el-2 (or (second input) (first source))
-          next-input (drop 1 input)]
+          next-input (rest input)]
       (cond (empty? input) solution
-            (= input-el-1 input-el-2) (recur next-input (+ solution (char->int input-el-1) ))
+            (= input-el-1 input-el-2) (recur next-input (+ solution (char->int input-el-1)))
+            :else (recur next-input solution)))))
+
+(defn solve-2
+  [source]
+  (loop [input source solution 0]
+    (let [index (- (count source) (count input))
+          input-el-1 (first input)
+          input-el-2-index (-> (/ (count source) 2)
+                               (+ index)
+                               (rem (count source)))
+          input-el-2 (nth source input-el-2-index)
+          next-input (rest input)]
+      (cond (empty? input) solution
+            (= input-el-1 input-el-2) (recur next-input (+ solution (char->int input-el-1)))
             :else (recur next-input solution)))))
 
 (defn -main
