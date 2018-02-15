@@ -1,21 +1,18 @@
 import numpy as np
 from functools import reduce
 
+def parse_list(file_name):
+    return np.loadtxt(file_name, delimiter="\t")
 
 def map_as_sorted(ls):
     return list(map(lambda x: np.sort(x), ls))
 
-
-def parse_list(file_name):
-    return np.loadtxt(file_name, delimiter="\t")
-
-
 def map_first_and_last(ls):
-    return list(map(lambda x: [x[0], x[-1]], ls))
+    return [(x[-1], x[0]) for x in ls]
 
 
 def difference_last_and_first(ls):
-    return list(map(lambda x: x[-1] - x[0], ls))
+    return [x[-1] - x[0] for x in ls]
 
 
 def calculate_list(ls):
@@ -23,6 +20,7 @@ def calculate_list(ls):
 
 
 def solve():
+
     parsed = parse_list("input.txt")
     sorted = map_as_sorted(parsed)
     first_and_last = map_first_and_last(sorted)
