@@ -2,3 +2,5 @@
 target/
 *.iml
 myenv
+_build
+__pycache__
