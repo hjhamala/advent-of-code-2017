@@ -3,8 +3,7 @@ defmodule Drop do
   Documentation for Drop.
   """
 
-  def coerce(coll) do
-    [target, operation, value, _ , condition_variable, condition, condition_value] = coll
+  def coerce([target, operation, value, _ , condition_variable, condition, condition_value]) do
     [target, operation, String.to_integer(value), condition_variable, condition, String.to_integer(condition_value)]
   end
 
@@ -42,9 +41,7 @@ defmodule Drop do
     end
   end
 
-
-  def process(row, state) do
-    [target, operation, value, condition_variable, condition, condition_value] = row
+  def process([target, operation, value, condition_variable, condition, condition_value], state) do
     cond do
       check_condition(condition, Map.get(state, condition_variable, 0), condition_value) ->
         new_value = calculate_new_value(operation, Map.get(state, target, 0), value)
@@ -62,7 +59,7 @@ defmodule Drop do
     acc
   end
 
-  def solve_part_1() do
+  def solve_both_parts() do
     state = iterate_commands(parse(), %{})
     values = Map.delete(state, :max)
              |> Map.values
