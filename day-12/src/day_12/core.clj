@@ -10,7 +10,7 @@
   [s]
   (let [[program connections] (clojure.string/split s #"<->")
         connections-to-set (->> (string/split connections #",")
-                               (map string/trim)
+                                (map string/trim)
                                 (map keyword)
                                 set)]
     {(keyword (string/trim program)) connections-to-set}))
@@ -35,11 +35,10 @@
     (println [current-program visited-programs connections-to-check])
     (cond
       (empty? (set/difference connections-to-check visited-programs)) (conj visited-programs current-program)
-      :else (recur
-        (first connections-to-check)
-        (conj visited-programs current-program)
-        (-> (set/union (-> connections-to-check rest set) (get programs (first connections-to-check)))
-            (set/difference #{current-program} visited-programs))))))
+      :else (recur (first connections-to-check)
+                   (conj visited-programs current-program)
+                   (-> (set/union (-> connections-to-check rest set) (get programs (first connections-to-check)))
+                       (set/difference #{current-program} visited-programs))))))
 
 (defn solve-part-one
   []
@@ -48,8 +47,7 @@
 (defn solve-part-two
   [programs]
   (loop [prg programs groups 0]
-    (Thread/sleep 1000)
-    (let [program-group (and (-> prg first first)  (generate-group programs (-> prg first first)))]
+    (let [program-group (and (-> prg first first) (generate-group programs (-> prg first first)))]
       (println "Programs left: " (count prg))
       ;println "Programs list: " prg)
       (println "Current program: " (-> prg first first))

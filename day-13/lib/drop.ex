@@ -14,7 +14,7 @@ defmodule Drop do
     |> Stream.map(&coerce/1)
     |> Enum.to_list
   end
-  
+
   def triangle_wave(range,time) do
     range - abs(rem(time, (2 * range)) - range)
   end
@@ -47,13 +47,11 @@ defmodule Drop do
   end
 
   def calculate_with_delay(input, delay) do
-
     Enum.map(input, fn x -> calculate_severity(x, delay) end )
     |> Enum.reduce(fn x, y -> x + y end)
   end
 
   def try_with_delay(input, delay) do
-
     case calculate_with_delay(input, delay) do
       0 -> delay
       _ -> try_with_delay(input,delay + 1)
